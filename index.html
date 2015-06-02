@@ -3,11 +3,98 @@
 	<meta charset="utf-8">
 
 	<title>Test Page</title>
+
+	<style>
+	.reply {
+		display: none;
+	}
+	</style>
 </head>
 
 <body>
 	<h1>Test Page</h1>
 	<hr>
-	So, er, umm... this is just a test page, so if it working good... like if you see this and stuff... then, uhh, yay? I don't know, maybe you didn't even want to see this. Oh well, it's too late now.
+	So, er, umm... this is just a test page, so if it working good... like if you see this and stuff... then, uhh, yay? I don't know, maybe you didn't even want to see this. Oh well, guess it's too late now. How 'bout I draw you a star, would that cheer you up? Alright, I'll try...
+	<br>
+	<canvas id="canvas" width=400 height=400>Er... sorry to say this kid, but you ain't got no support for any of them canvas elements, so there ain't much I can do for drawing stuff.</canvas>
+	<br>
+	So how was that then? You happy now? <br>
+	<span><input type="radio" name="reply" value="yes" onclick="handleReply()">Yes<br></span>
+	<span><input type="radio" name="reply" value="no" onclick="handleReply()">No<br></span>
+	<hr>
+	<div id="yesReply" class="reply">
+		Good. Now uh, you might want to get back to whatever 'chu were doing before you showed up here, and try and keep this low profile, eh? I'd be a shame if this place started gettin' run over by a buncha' people.<br>
+		<img src="http://www.quickmeme.com/img/b1/b1f01676eaec095ce57fd24a44d3034f3958470b9c787c718a0828d7bdf8aa67.jpg"></img>
+	</div>
+	<div id="noReply" class="reply">
+		Well, gee man, their ain't much else I can do. I've got this cat picture, but that's basically it. So, I uhh... I hope the rest of your day goes well then. Chau!<br>
+		<img src="images/GrumpyCat.png"></img>
+	</div>
+	
+	<script>
+	// Draw the man a star!
+	// Shamelessly copied from http://stackoverflow.com/a/25840319/4431222
+	canvas = document.getElementById("canvas")
+	ctx = canvas.getContext("2d")
+	
+	function drawStar(cx,cy,spikes,outerRadius,innerRadius) {
+		var rot=Math.PI/2*3;
+		var x=cx;
+		var y=cy;
+		var step=Math.PI/spikes;
+
+		ctx.beginPath();
+		ctx.moveTo(cx,cy-outerRadius)
+		for(i=0;i<spikes;i++){
+			x=cx+Math.cos(rot)*outerRadius;
+			y=cy+Math.sin(rot)*outerRadius;
+			ctx.lineTo(x,y)
+			rot+=step
+
+			x=cx+Math.cos(rot)*innerRadius;
+			y=cy+Math.sin(rot)*innerRadius;
+			ctx.lineTo(x,y)
+			rot+=step
+		}
+		ctx.lineTo(cx,cy-outerRadius)
+
+		ctx.lineWidth = "3"
+		ctx.strokeSyle="#000";
+		ctx.stroke();
+
+		ctx.fillStyle = "yellow"
+		ctx.fill()
+
+		ctx.closePath();
+	}
+
+	drawStar(canvas.width/2, canvas.height/2, 5, 150, 70);
+	
+	
+	// Respond to the guy when he says something!
+	function handleReply() {
+		var radios = document.getElementsByName("reply")
+		var selected
+		for(var i = 0; i < radios.length; i++) {
+			if(radios[i].checked) {
+				selected = radios[i]
+				
+				break;
+			}
+		}
+		
+		if(selected.value === "yes") {
+			document.getElementById("yesReply").style.display = "block"
+		} else if(selected.value === "no") {
+			document.getElementById("noReply").style.display = "block"
+		}
+		
+		for(var i = 0; i < radios.length; i++) {
+			if(radios[i] != selected) {
+				radios[i].parentElement.style.display = "none"
+			}
+		}
+	}
+	</script>
 </body>
 </html>
