@@ -5,13 +5,13 @@
 	<title>Test Page</title>
 
 	<style>
-	.reply {
+	.hidden {
 		display: none;
 	}
 	</style>
 </head>
 
-<body>
+<body onload="handleReply()">
 	<h1>Test Page</h1>
 	<hr>
 	So, er, umm... this is just a test page, so if it working good... like if you see this and stuff... then, uhh, yay? I don't know, maybe you didn't even want to see this. Oh well, guess it's too late now. How 'bout I draw you a star, would that cheer you up? Alright, I'll try...
@@ -21,12 +21,13 @@
 	So how was that then? You happy now? <br>
 	<span><input type="radio" name="reply" value="yes" onclick="handleReply()">Yes<br></span>
 	<span><input type="radio" name="reply" value="no" onclick="handleReply()">No<br></span>
+	<span class="hidden"><input type="radio" name="reply" value="none" clicked></span>
 	<hr>
-	<div id="yesReply" class="reply">
+	<div id="yesReply" class="hidden">
 		Good. Now uh, you might want to get back to whatever 'chu were doing before you showed up here, and try and keep this low profile, eh? I'd be a shame if this place started gettin' run over by a buncha' people.<br>
 		<img src="http://www.quickmeme.com/img/b1/b1f01676eaec095ce57fd24a44d3034f3958470b9c787c718a0828d7bdf8aa67.jpg"></img>
 	</div>
-	<div id="noReply" class="reply">
+	<div id="noReply" class="hidden">
 		Well, gee man, their ain't much else I can do. I've got this cat picture, but that's basically it. So, I uhh... I hope the rest of your day goes well then. Chau!<br>
 		<img src="images/GrumpyCat.png"></img>
 	</div>
@@ -84,14 +85,14 @@
 		}
 		
 		if(selected.value === "yes") {
-			document.getElementById("yesReply").style.display = "block"
+			document.getElementById("yesReply").className = ""
 		} else if(selected.value === "no") {
-			document.getElementById("noReply").style.display = "block"
+			document.getElementById("noReply").className = ""
 		}
 		
 		for(var i = 0; i < radios.length; i++) {
 			if(radios[i] != selected) {
-				radios[i].parentElement.style.display = "none"
+				radios[i].parentElement.className = "hidden"
 			}
 		}
 	}
